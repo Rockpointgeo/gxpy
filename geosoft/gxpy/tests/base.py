@@ -8,21 +8,20 @@ from tkinter import Tk, messagebox
 import win32con
 import win32gui
 
-os.environ['GEOSOFT_FORCE_MESA_3D'] = '1'
-os.environ['GEOSOFT_TEST_MODE'] = '1'
-os.environ['GEOSOFT_TESTSYSTEM_MODE'] = '1'
-
-def set_geosoft_bin():
-    # set to release environment for ian
-    if os.environ['USERDOMAIN'] == 'GEOSOFT' and os.environ['USERNAME'] == 'ian':
-        os.environ['GX_GEOSOFT_BIN_PATH'] = 'C:\\Program Files\\Geosoft\\Desktop Applications 9\\bin'
-
 import geosoft.gxpy.gx as gx
 import geosoft.gxapi as gxapi
 import geosoft.gxpy.map as gxmap
 import geosoft.gxpy.viewer as gxvwr
 import geosoft.gxpy.utility as gxu
 import geosoft.gxpy.system as gxsys
+
+os.environ['GEOSOFT_FORCE_MESA_3D'] = '1'
+os.environ['GEOSOFT_TEST_MODE'] = '1'
+os.environ['GEOSOFT_TESTSYSTEM_MODE'] = '1'
+
+def set_geosoft_bin_path():
+    if 'GX_GEOSOFT_BIN_PATH_RELEASE' in os.environ:
+        os.environ['GX_GEOSOFT_BIN_PATH'] = os.environ['GX_GEOSOFT_BIN_PATH_RELEASE']
 
 # Set the following to True to enable interactive updating of results.
 # To incorporate a diff tool the GXPY_DIFF_TOOL environment
@@ -101,7 +100,7 @@ class GXPYTest(unittest.TestCase):
         os.makedirs(gxu._temp_folder_override, exist_ok=True)
 
         gxu._uuid_callable = cls._cls_uuid
-        set_geosoft_bin()
+        set_geosoft_bin_path()
         cls._gx = gx.GXpy(log=print, res_stack=res_stack, max_warnings=12, suppress_progress=True)
 
     @classmethod
