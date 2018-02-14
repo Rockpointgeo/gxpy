@@ -11,7 +11,8 @@ from base import GXPYTest
 class Test(GXPYTest):
     @classmethod
     def setUpClass(cls):
-        cls.gxc = gx.GXpy(log=print)
+        cls.setUpGXPYTest(res_stack=4)
+        #cls.gxc = gx.GXpy(log=print)
 
     def test_gxpy(self):
         with gx.GXpy() as gxc:
