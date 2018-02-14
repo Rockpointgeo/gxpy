@@ -911,7 +911,7 @@ def folder_temp(use_override=True):
     """
     Return the Geosoft temporary folder name.
 
-    :param use_override: True to use the _tem_folder_overide if it is defined (used by tests)
+    :param use_override: True to use the _temp_folder_overide if it is defined (used by tests)
 
     .. Note::
         If creating temporary files, better to use gx method :meth:`~gx.GXpy.temp_file`, which will

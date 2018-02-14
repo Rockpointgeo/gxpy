@@ -747,6 +747,9 @@ class Test(GXPYTest):
                 self.assertAlmostEqual(6.994032176517, gi.x0)
                 self.assertAlmostEqual(43.494032176517, gi.y0)
 
+    def test_remove_temp_files(self):
+        pass  # TODO: write this test
+
 ###############################################################################################
 
 if __name__ == '__main__':
