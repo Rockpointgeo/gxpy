@@ -1325,7 +1325,7 @@ def is_path_locked(path, age=None):
 
     if os.path.exists(path):
         if not os.path.isdir(path):
-            return is_file_locked(path)
+            return is_file_locked(path, age=age)
         for item in os.listdir(path):
             item = os.path.join(path, item)
             if os.path.isdir(item):

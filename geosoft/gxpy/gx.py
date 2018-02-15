@@ -568,7 +568,7 @@ class GXpy(_Singleton):
 
     def remove_stale_temporary_files(self, age=24 * 60 * 60):
         """
-        Removes stale temporary files ftom the current instance temporary file folder.
+        Removes stale temporary files from the current instance temporary file folder.
 
         :param age: files older than this age is seconds are removed.  The default is 24 * 60 * 60.
 
@@ -577,6 +577,8 @@ class GXpy(_Singleton):
         temporary folder for this running GX instance. Upon loss of GX context all temporary files will
         be removed, but for a long-running process, such as a GX instnce that supports a web application,
         it can be useful to use this function to remove stale files and free valuable disk space.
+
+        Folders, if any, are not removed, but stale-dated files within folders will be removed.
 
         .. versionadded:: 9.3.2
         """
@@ -587,7 +589,7 @@ class GXpy(_Singleton):
                 if os.path.isdir(ff):
                     remove_all_files(ff)
                 else:
-                    if not gxu.is_path_locked(ff, age=age):
+                    if not gxu.is_file_locked(ff, age=age):
                         gxu.delete_file(ff)
 
         remove_all_files(self.temp_folder())
