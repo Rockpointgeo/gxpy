@@ -116,8 +116,6 @@ class Test(GXPYTest):
             for f in files:
                 self.assertFalse(os.path.exists(f))
 
-        pass  # TODO: write this test
-
 
 ###############################################################################################
 
