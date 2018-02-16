@@ -8,20 +8,20 @@ from tkinter import Tk, messagebox
 import win32con
 import win32gui
 
+os.environ['GEOSOFT_FORCE_MESA_3D'] = '1'
+os.environ['GEOSOFT_TEST_MODE'] = '1'
+os.environ['GEOSOFT_TESTSYSTEM_MODE'] = '1'
+
+def set_geosoft_bin_path():
+    if 'GX_GEOSOFT_BIN_PATH_TESTING' in os.environ:
+        os.environ['GX_GEOSOFT_BIN_PATH'] = os.environ['GX_GEOSOFT_BIN_PATH_TESTING']
+
 import geosoft.gxpy.gx as gx
 import geosoft.gxapi as gxapi
 import geosoft.gxpy.map as gxmap
 import geosoft.gxpy.viewer as gxvwr
 import geosoft.gxpy.utility as gxu
 import geosoft.gxpy.system as gxsys
-
-os.environ['GEOSOFT_FORCE_MESA_3D'] = '1'
-os.environ['GEOSOFT_TEST_MODE'] = '1'
-os.environ['GEOSOFT_TESTSYSTEM_MODE'] = '1'
-
-def set_geosoft_bin_path():
-    if 'GX_GEOSOFT_BIN_PATH_RELEASE' in os.environ:
-        os.environ['GX_GEOSOFT_BIN_PATH'] = os.environ['GX_GEOSOFT_BIN_PATH_RELEASE']
 
 # Set the following to True to enable interactive updating of results.
 # To incorporate a diff tool the GXPY_DIFF_TOOL environment
@@ -31,6 +31,8 @@ UPDATE_RESULTS_DONT_ASK = False
 
 # set to False to compare result and master png files. These may differ depending on OM settings between
 # environment that creates the master and the results.
+#
+# TODO: need a robust png test that is not OM installation dependent. Then set following to False.
 IGNORE_IMAGE_DIFFERENCES = True
 
 # set to True to show viewer for each CRC call
@@ -100,6 +102,7 @@ class GXPYTest(unittest.TestCase):
         os.makedirs(gxu._temp_folder_override, exist_ok=True)
 
         gxu._uuid_callable = cls._cls_uuid
+
         set_geosoft_bin_path()
         cls._gx = gx.GXpy(log=print, res_stack=res_stack, max_warnings=12, suppress_progress=True)
 
